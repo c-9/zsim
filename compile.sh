@@ -1,7 +1,7 @@
 #!/bin/bash
 ZSIMPATH=$(pwd)
-PINPATH=$ZSIMPATH/pin
-#LIBCONFIGPATH=$ZSIMPATH/lib/libconfig
+PINPATH="$ZSIMPATH/pin"
+#LIBCONFIGPATH="$ZSIMPATH/lib/libconfig"
 NUMCPUS=$(grep -c ^processor /proc/cpuinfo)
 
 if [ "$1" = "z" ]
