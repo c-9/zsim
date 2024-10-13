@@ -68,7 +68,7 @@ def buildSim(cppFlags, dir, type, pgo=None):
 
     env["CPPPATH"] = [xedPath,
             pinInclDir, joinpath(pinInclDir, "gen"),
-            joinpath(PINPATH, "extras/components/include")]
+            joinpath(PINPATH, "extras/components/include"), joinpath("/usr/include/hdf5/serial")]
 
     # Perform trace logging?
     ##env["CPPFLAGS"] += " -D_LOG_TRACE_=1"
@@ -91,7 +91,7 @@ def buildSim(cppFlags, dir, type, pgo=None):
     # systems, Pin's libelf takes precedence over the system's, but it does not
     # include symbols that we need or it's a different variant (we need
     # libelfg0-dev in Ubuntu systems)
-    env["PINLIBPATH"] = ["/usr/lib", "/usr/lib/x86_64-linux-gnu", joinpath(PINPATH, "extras/" + xedName + "-intel64/lib"),
+    env["PINLIBPATH"] = ["/usr/lib", "/usr/lib/x86_64-linux-gnu", "/usr/lib/x86_64-linux-gnu/hdf5/serial/", joinpath(PINPATH, "extras/" + xedName + "-intel64/lib"),
             joinpath(PINPATH, "intel64/lib"), joinpath(PINPATH, "intel64/lib-ext")]
 
     # Libdwarf is provided in static and shared variants, Ubuntu only provides
@@ -152,6 +152,7 @@ def buildSim(cppFlags, dir, type, pgo=None):
 
     # HDF5
     env["PINLIBS"] += ["hdf5", "hdf5_hl"]
+    env["LINKFLAGS"] += " -L/usr/lib/x86_64-linux-gnu/hdf5/serial/"
 
     # Harness needs these defined
     env["CPPFLAGS"] += ' -DPIN_PATH="' + joinpath(PINPATH, "intel64/bin/pinbin") + '" '
